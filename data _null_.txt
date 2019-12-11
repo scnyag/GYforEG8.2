@@ -1,0 +1,49 @@
+/*
+ *
+ * SAS Studio 3.2 產生的工作程式碼 
+ *
+ * 產生時間: '2014/8/10 下午10:59' 
+ * 產生者: 'sasdemo' 
+ * 產生於伺服器 'RDCESX50151.RACE.SAS.COM' 
+ * 產生於 SAS 平台 'X64_S08R2 WIN' 
+ * 產生於 SAS 版本 '9.04.01M2P07232014' 
+ * 產生於瀏覽器 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0' 
+ * 產生於 Web 用戶端 'http://rdcesx50151.race.sas.com/SASStudio/main?locale=zh_TW&zone=GMT-07%3A00' 
+ *
+ */
+
+/*--Put statistic into macro variable--*/
+ %let stat=Mean;
+ 
+/*--Get variable name or labels--*/
+data _null_;
+	array x(1) Height;
+	set SASHELP.CLASS;
+	call symputx ("Label", vlabel(x(1)));
+run;
+
+/*--Put variable name/label or custom labels--*/
+data _null_;
+	call symputx ("respLabel", "&Label");
+run;
+
+/*--Combine label and stat into statRespLabel--*/
+ %let statRespLabel=&respLabel (&stat);
+
+/*--Set output size--*/
+ods graphics / reset width=6.4in height=12in;
+
+/*--SGPLOT proc statement--*/
+proc sgplot data=SASHELP.CLASS noautolegend;
+    /*--Bar chart settings--*/
+    vbar Age / response=Height group=Age groupdisplay=Cluster 
+	stat=Mean name='Bar';
+
+    /*--Category Axis--*/
+    xaxis;
+
+    /*--Legend Settings--*/
+    keylegend 'Bar' / title='Age:' location=Outside;
+run;
+
+ods graphics / reset;
