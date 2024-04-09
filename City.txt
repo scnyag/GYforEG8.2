@@ -1,0 +1,11 @@
+CityName
+Champaign
+Detroit
+Guangzhou
+Hong Kong
+Juarez
+Los Angeles
+Matamoros
+New York (Bronx)
+New York (Queens)
+Seattle
